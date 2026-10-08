@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CMC18 冲刺驾驶舱</title>
+  <meta name="theme-color" content="#19324d" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="app-icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">∫</div>
+        <div>
+          <h1>CMC18 Coach</h1>
+          <p>非数 A · 国一冲刺</p>
+        </div>
+      </div>
+      <nav>
+        <button class="nav-btn active" data-view="dashboard">总览</button>
+        <button class="nav-btn" data-view="learning">学习区</button>
+        <button class="nav-btn" data-view="exam">赛卷地图</button>
+        <button class="nav-btn" data-view="today">今日训练</button>
+        <button class="nav-btn" data-view="focus">专注启动</button>
+        <button class="nav-btn" data-view="concepts">概念去雾</button>
+        <button class="nav-btn" data-view="debrief">出题人复盘</button>
+        <button class="nav-btn" data-view="map">能力地图</button>
+        <button class="nav-btn" data-view="errors">错因诊断</button>
+        <button class="nav-btn" data-view="review">复测队列</button>
+        <button class="nav-btn" data-view="mock">模考趋势</button>
+      </nav>
+      <div class="sidebar-footer">
+        <span>考试时间</span>
+        <strong>2026.11.14 09:00</strong>
+        <small>北京时区</small>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">EXAM-DRIVEN CONTROL SYSTEM</p>
+          <h2 id="viewTitle">总览</h2>
+        </div>
+        <div class="countdown-card">
+          <span>距离初赛</span>
+          <strong id="countdownDays">--</strong>
+          <small>天</small>
+        </div>
+      </header>
+
+      <section id="dashboard" class="view active">
+        <div class="hero-grid">
+          <article class="hero card">
+            <div>
+              <p class="eyebrow">当前阶段</p>
+              <h3 id="phaseName">一元压缩</h3>
+              <p id="phaseDesc">先把一元核心压成可快速调用的 CMC 工具箱。</p>
+            </div>
+            <div class="phase-progress">
+              <div class="ring"><span id="phasePct">0%</span></div>
+            </div>
+          </article>
+
+          <article class="card metric-card">
+            <span>今日完成率</span>
+            <strong id="todayRate">0%</strong>
+            <small>训练必须转化为可验证行为</small>
+          </article>
+
+          <article class="card metric-card">
+            <span>待复测</span>
+            <strong id="reviewCount">0</strong>
+            <small>24h / 7d 复测队列</small>
+          </article>
+
+          <article class="card metric-card">
+            <span>最近模考</span>
+            <strong id="latestMock">--</strong>
+            <small>不追“感觉”，只看稳定兑现</small>
+          </article>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">ABILITY SNAPSHOT</p>
+                <h3>能力短板优先级</h3>
+              </div>
+              <button class="text-btn" data-view-target="map">去评分 →</button>
+            </div>
+            <div id="weaknessList" class="weakness-list"></div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">NEXT MOVE</p>
+                <h3>系统给你的下一步</h3>
+              </div>
+            </div>
+            <div id="nextMove" class="coach-note"></div>
+          </article>
+        </div>
+
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">EXAM ROADMAP</p>
+              <h3>四阶段冲刺路径</h3>
+            </div>
+          </div>
+          <div id="phaseTimeline" class="timeline"></div>
+        </article>
+      </section>
+
+      <section id="learning" class="view">
+        <article class="card learning-hero">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">CMC KNOWLEDGE BUILD</p>
+              <h3>从真题结构反推今天该学什么</h3>
+            </div>
+            <span class="target-chip">CMC18 · 非数学 A · 湖北赛区</span>
+          </div>
+          <p class="muted">全国统一非数 A 初赛卷。学习顺序由 CMC 真题结构决定，不照考研教材目录机械推进。</p>
+          <div class="learning-source-grid">
+            <div class="source-card"><b>知识来源</b><code>个人教材路径（已隐藏）</code><span>用于框架、概念、定理、公式重建</span></div>
+            <div class="source-card"><b>练习池</b><code>个人教材路径（已隐藏）</code><span>只抽代表结构题，不追求刷完</span></div>
+          </div>
+          <div class="learning-gate">
+            <span>赛卷结构</span><i>→</i><span>分值机会</span><i>→</i><span>知识缺口</span><i>→</i><span>代表技术</span><i>→</i><span>CMC变式</span><i>→</i><span>真题验证</span>
+          </div>
+        </article>
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">KNOWLEDGE MAP</p>
+              <h3>真题驱动知识树</h3>
+            </div>
+            <span class="muted">状态由闭卷与迁移证据决定</span>
+          </div>
+          <div id="learningModules" class="learning-modules"></div>
+        </article>
+      </section>
+
+      <section id="exam" class="view">
+        <div class="debt-strip">
+          <article class="card debt-card"><span>覆盖债</span><strong id="coverageDebtCount">0</strong><small>高频高分但尚未覆盖</small></article>
+          <article class="card debt-card"><span>迁移债</span><strong id="transferDebtCount">0</strong><small>会知识但不会陌生包装</small></article>
+          <article class="card debt-card"><span>速度债</span><strong id="speedDebtCount">0</strong><small>填空入口或执行偏慢</small></article>
+          <article class="card debt-card"><span>证明债</span><strong id="proofDebtCount">0</strong><small>证明链无法独立启动</small></article>
+        </div>
+
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">RECENT PAPER MAP</p>
+              <h3>第15–17届非数学 A · 结构矩阵</h3>
+            </div>
+            <span class="target-chip">近期权重 1.0</span>
+          </div>
+          <p class="muted">不是背题目，而是看哪些底层结构连续出现。✓ 代表该届至少出现一次。</p>
+          <div id="examMatrix" class="exam-matrix-wrap"></div>
+        </article>
+
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">SCORE OPPORTUNITIES</p>
+              <h3>当前最值得抢的分</h3>
+            </div>
+          </div>
+          <div id="examOpportunities" class="opportunity-grid"></div>
+        </article>
+
+        <div class="grid-2 exam-fast-grid">
+          <article class="card">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">FILL-IN FAST PATH</p>
+                <h3>记录一次填空短路训练</h3>
+              </div>
+            </div>
+            <form id="fastPathForm" class="form-stack fast-path-form">
+              <label>结构<select id="fastPathStructure"></select></label>
+              <div class="mini-grid">
+                <label>识别入口用时（秒）<input id="fastPathRecognition" type="number" min="0" max="600" inputmode="numeric" required /></label>
+                <label>完整求解用时（秒）<input id="fastPathSolve" type="number" min="0" max="1800" inputmode="numeric" required /></label>
+              </div>
+              <label>结果<select id="fastPathCorrect"><option value="yes">正确</option><option value="no">错误</option></select></label>
+              <label>你选的第一方法<input id="fastPathMethod" placeholder="如：Taylor / 对称换元 / 隐函数直接求导" /></label>
+              <label>一句话备注<input id="fastPathNote" placeholder="卡在哪里，或最短路径是什么" /></label>
+              <button class="primary-btn" type="submit">记录 Fast Path</button>
+            </form>
+          </article>
+
+          <article class="card">
+            <p class="eyebrow">RECENT FAST PATH</p>
+            <h3>最近识别速度</h3>
+            <div id="fastPathLog" class="log-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="today" class="view">
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">TODAY'S PLAN</p>
+              <h3 id="todayHeadline">今日任务</h3>
+            </div>
+            <button id="resetToday" class="ghost-btn">重置今日</button>
+          </div>
+          <div id="todayTasks" class="task-list"></div>
+        </article>
+
+        <div class="grid-2">
+          <article class="card">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">EVENING ORAL</p>
+                <h3>教师主持 · 晚间 5 问</h3>
+              </div>
+              <span id="eveningOralBadge" class="mastery mastery-forming">未开始</span>
+            </div>
+            <div class="coach-note">
+              晚间复盘不需要你填写表格。你在聊天里回答，我根据当天真实学习与做题记录动态追问，并负责诊断、归档和安排明日第一任务。
+            </div>
+            <div id="eveningOralStatus" class="oral-status-grid"></div>
+          </article>
+
+          <article class="card">
+            <p class="eyebrow">RULE</p>
+            <h3>今天只遵守一个原则</h3>
+            <div class="big-rule">先闭卷暴露，再定向补洞。</div>
+            <p class="muted">如果一个知识点“看答案会，合上书不会”，系统一律按“未掌握”处理。</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="focus" class="view">
+        <div class="grid-2">
+          <article class="card focus-card">
+            <p class="eyebrow">MATH FIRST</p>
+            <h3>先启动，再谈状态</h3>
+            <div id="focusTimer" class="focus-timer">10:00</div>
+            <p class="muted">关掉论文与聊天窗口，拿纸笔做 10 分钟闭卷唤醒。启动完成后再进入今日正式训练。</p>
+            <button id="startMath" class="primary-btn">开始 10 分钟数学启动</button>
+            <div id="focusStatus" class="coach-note compact-note"></div>
+          </article>
+
+          <article class="card">
+            <p class="eyebrow">PAPER PARKING LOT</p>
+            <h3>论文任务先停车，不抢数学</h3>
+            <form id="parkingForm" class="inline-form">
+              <input id="parkingInput" placeholder="例如：补 AAMAS Figure 1 引用" />
+              <button class="ghost-btn" type="submit">停车</button>
+            </form>
+            <div id="parkingList" class="log-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="concepts" class="view">
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">COACH CONCEPT FOG QUEUE</p>
+              <h3>概念去雾由教练主持</h3>
+            </div>
+            <span class="muted">你只做复测，不填写教学分析</span>
+          </div>
+          <div class="coach-note">
+            当一道题暴露出“好像懂但说不清”的定义、定理或公式时，我会自动把它放进这里，并给出动机、直觉、正式表达、条件作用、反例与调用信号。你只需要在安排的时间闭卷复述或做迁移题。
+          </div>
+          <div id="conceptList" class="log-list concept-queue"></div>
+        </article>
+      </section>
+
+      <section id="debrief" class="view">
+        <div class="grid-2">
+          <article class="card">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">COACH INBOX</p>
+                <h3>我已经替你拆过的题</h3>
+              </div>
+              <span class="muted">不再手填出题人复盘</span>
+            </div>
+            <div class="coach-note">每道高价值题完成后，我会自动写入表面题型、底层结构、条件作用、陷阱、关键转折、迁移信号与复测安排。</div>
+            <div id="coachInbox" class="log-list"></div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">TRANSFER DEBT</p>
+                <h3>看懂了，但还没证明会迁移</h3>
+              </div>
+            </div>
+            <p class="muted">原题做出、提示后做出、看懂完整解答，都不会自动关债。只有独立变式或延迟复测通过才算验证。</p>
+            <div id="transferDebtList" class="log-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="map" class="view">
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">ABILITY MAP</p>
+              <h3>9 个核心模块 · 5 个能力维度</h3>
+            </div>
+            <span class="muted">0 = 不会，10 = 稳定竞赛级</span>
+          </div>
+          <div id="abilityTable" class="ability-table-wrap"></div>
+        </article>
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">STRUCTURE BANK</p>
+              <h3>按底层结构压缩题目</h3>
+            </div>
+            <span class="muted">不同外观，同一骨架</span>
+          </div>
+          <div id="structureBank" class="log-list"></div>
+        </article>
+      </section>
+
+      <section id="errors" class="view">
+        <div class="grid-2">
+          <article class="card">
+            <p class="eyebrow">ERROR INTAKE</p>
+            <h3>录入一道错题</h3>
+            <form id="errorForm" class="form-stack">
+              <label>题目/来源<input id="errorTitle" required placeholder="如：第17届A卷第5题" /></label>
+              <label>知识模块<select id="errorModule"></select></label>
+              <label>真正错因<select id="errorType">
+                <option>知识缺失</option>
+                <option>公式提取失败</option>
+                <option>方法识别失败</option>
+                <option>关键转化没想到</option>
+                <option>运算不稳</option>
+                <option>证明链断裂</option>
+                <option>速度不足</option>
+              </select></label>
+              <label>触发信号<input id="errorSignal" placeholder="题目中哪一眼应该提醒你？" /></label>
+              <label>第一入口<input id="errorEntry" placeholder="下一次看到应先尝试什么？" /></label>
+              <label>复测日期<input id="errorReviewDate" type="date" /></label>
+              <button class="primary-btn" type="submit">加入错题系统</button>
+            </form>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">DIAGNOSIS</p>
+                <h3>错因分布</h3>
+              </div>
+            </div>
+            <div id="errorStats" class="error-stats"></div>
+          </article>
+        </div>
+        <article class="card">
+          <h3>错题日志</h3>
+          <div id="errorLog" class="log-list"></div>
+        </article>
+      </section>
+
+      <section id="review" class="view">
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">RETEST QUEUE</p>
+              <h3>到期复测</h3>
+            </div>
+          </div>
+          <div id="reviewQueue" class="log-list"></div>
+        </article>
+      </section>
+
+      <section id="mock" class="view">
+        <div class="grid-2">
+          <article class="card">
+            <p class="eyebrow">MOCK INPUT</p>
+            <h3>录入一次限时整卷</h3>
+            <form id="mockForm" class="form-stack">
+              <label>日期<input id="mockDate" type="date" required /></label>
+              <label>试卷<input id="mockName" required placeholder="如：第16届非数A" /></label>
+              <label>得分<input id="mockScore" type="number" min="0" max="100" required /></label>
+              <label>150分钟内完成？<select id="mockTimed"><option value="yes">是</option><option value="no">否</option></select></label>
+              <label>一句话复盘<input id="mockNote" placeholder="最大失分源是什么？" /></label>
+              <button class="primary-btn" type="submit">记录模考</button>
+            </form>
+          </article>
+
+          <article class="card">
+            <p class="eyebrow">TREND</p>
+            <h3>分数趋势</h3>
+            <div id="mockChart" class="mock-chart"></div>
+          </article>
+        </div>
+        <article class="card">
+          <h3>模考日志</h3>
+          <div id="mockLog" class="log-list"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <div id="mobileMoreMenu" class="mobile-more-menu" hidden>
+    <button type="button" class="mobile-nav-btn secondary" data-mobile-view="dashboard">总览</button>
+    <button type="button" class="mobile-nav-btn secondary" data-mobile-view="focus">专注</button>
+    <button type="button" class="mobile-nav-btn secondary" data-mobile-view="concepts">概念</button>
+    <button type="button" class="mobile-nav-btn secondary" data-mobile-view="debrief">复盘</button>
+    <button type="button" class="mobile-nav-btn secondary" data-mobile-view="map">能力</button>
+    <button type="button" class="mobile-nav-btn secondary" data-mobile-view="errors">错因</button>
+    <button type="button" class="mobile-nav-btn secondary" data-mobile-view="mock">模考</button>
+  </div>
+
+  <nav id="mobileNav" class="mobile-nav" aria-label="手机主导航">
+    <button type="button" class="mobile-nav-btn" data-mobile-view="today"><span>今日</span></button>
+    <button type="button" class="mobile-nav-btn" data-mobile-view="exam"><span>赛卷</span></button>
+    <button type="button" class="mobile-nav-btn" data-mobile-view="learning"><span>学习</span></button>
+    <button type="button" class="mobile-nav-btn" data-mobile-view="review"><span>复测</span></button>
+    <button type="button" class="mobile-nav-btn" data-mobile-more="true"><span>更多</span></button>
+  </nav>
+
+  <script src="coach_logic.js"></script>
+  <script src="coach_data.js"></script>
+  <script src="exam_data.js"></script>
+  <script src="app.js"></script>
+  <script src="mobile_backup.js"></script>
+  <script src="mobile_install.js"></script>
+</body>
+</html>
