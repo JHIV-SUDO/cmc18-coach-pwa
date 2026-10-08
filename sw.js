@@ -1,7 +1,7 @@
-const CACHE_NAME="cmc18-coach-v7-20261008";
+const CACHE_NAME="cmc18-coach-v8-20261008";
 const ASSETS=[
   "./","./index.html","./style.css","./coach_logic.js","./coach_data.js",
-  "./exam_data.js","./app.js","./mobile_backup.js","./mobile_install.js","./manifest.webmanifest","./app-icon.svg","./app-icon-192.png","./app-icon-512.png"
+  "./exam_data.js","./app.js","./content_bank.js","./content_ui.js","./mobile_backup.js","./mobile_install.js","./manifest.webmanifest","./app-icon.svg","./app-icon-192.png","./app-icon-512.png"
 ];
 
 self.addEventListener("install",event=>{

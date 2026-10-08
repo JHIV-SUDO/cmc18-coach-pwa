@@ -2,6 +2,7 @@
 (function(){
   "use strict";
   const KEY="cmc18-coach-v2";
+  const CONTENT_KEY="cmc18-content-progress-v1";
   const COLLECTIONS=["problems","concepts","methods","relations","retests","coachSessions","recommendations"];
   const STATE_KEYS=[
     "ability","tasks","reflections","errors","mocks","problems","concepts","methods",
@@ -37,7 +38,9 @@
     const coachData=coach&&typeof coach==="object"?coach:{};
     const merged={...state};
     for(const k of COLLECTIONS) merged[k]=mergeRecords(state[k],coachData[k]);
-    return {format:"cmc18-portable-backup",version:1,createdAt:new Date().toISOString(),state:merged};
+    let contentProgress={};
+    try {const raw=JSON.parse(storage.getItem(CONTENT_KEY)||"{}");if(raw&&typeof raw==="object"&&!Array.isArray(raw))contentProgress=raw;}catch(_){}
+    return {format:"cmc18-portable-backup",version:1,createdAt:new Date().toISOString(),state:merged,contentProgress};
   }
   function applyBackup(storage,input){
     if(!input||input.format!=="cmc18-portable-backup"||input.version!==1||
@@ -52,9 +55,12 @@
       if(k in out&&(!out[k]||typeof out[k]!=="object"||Array.isArray(out[k])))
         throw new Error("备份数据结构不合法: "+k);
     }
+    if("contentProgress" in input && (!input.contentProgress||typeof input.contentProgress!=="object"||Array.isArray(input.contentProgress)))
+      throw new Error("题库进度数据结构不合法");
     const prior=storage.getItem(KEY);
     if(prior!==null) storage.setItem(KEY+"-before-import",prior);
     storage.setItem(KEY,JSON.stringify(out));
+    if("contentProgress" in input) storage.setItem(CONTENT_KEY,JSON.stringify(input.contentProgress));
     return true;
   }
   const api={createBackup,applyBackup,storageKey:KEY};

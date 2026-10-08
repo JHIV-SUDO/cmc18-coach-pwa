@@ -739,7 +739,7 @@ function setupForms(){
 }
 
 function setupNavigation(){
-  const titleMap={dashboard:"总览",learning:"学习区",exam:"赛卷地图",today:"今日训练",focus:"专注启动",concepts:"概念去雾",debrief:"出题人复盘",map:"能力地图",errors:"错因诊断",review:"复测队列",mock:"模考趋势"};
+  const titleMap={dashboard:"总览",learning:"学习区",library:"知识与题库",exam:"赛卷地图",today:"今日训练",focus:"专注启动",concepts:"概念去雾",debrief:"出题人复盘",map:"能力地图",errors:"错因诊断",review:"复测队列",mock:"模考趋势"};
   function show(id){
     document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id));
     document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.view===id));

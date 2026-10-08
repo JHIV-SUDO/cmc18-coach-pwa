@@ -23,6 +23,7 @@
       <nav>
         <button class="nav-btn active" data-view="dashboard">总览</button>
         <button class="nav-btn" data-view="learning">学习区</button>
+        <button class="nav-btn" data-view="library">知识与题库</button>
         <button class="nav-btn" data-view="exam">赛卷地图</button>
         <button class="nav-btn" data-view="today">今日训练</button>
         <button class="nav-btn" data-view="focus">专注启动</button>
@@ -206,6 +207,15 @@
             <div id="fastPathLog" class="log-list"></div>
           </article>
         </div>
+      </section>
+
+      <section id="library" class="view">
+        <article class="card library-shell">
+          <p class="eyebrow">LEARN & PRACTICE · OFFLINE</p>
+          <h3>知识精讲与原创训练题</h3>
+          <p class="muted">不只是知道“今天学什么”，还可以直接查看定理、条件、误区、练习与逐步解析。</p>
+          <div id="libraryBody"></div>
+        </article>
       </section>
 
       <section id="today" class="view">
@@ -416,6 +426,7 @@
 
   <div id="mobileMoreMenu" class="mobile-more-menu" hidden>
     <button type="button" class="mobile-nav-btn secondary" data-mobile-view="dashboard">总览</button>
+    <button type="button" class="mobile-nav-btn secondary" data-mobile-view="learning">学习路线</button>
     <button type="button" class="mobile-nav-btn secondary" data-mobile-view="focus">专注</button>
     <button type="button" class="mobile-nav-btn secondary" data-mobile-view="concepts">概念</button>
     <button type="button" class="mobile-nav-btn secondary" data-mobile-view="debrief">复盘</button>
@@ -427,7 +438,7 @@
   <nav id="mobileNav" class="mobile-nav" aria-label="手机主导航">
     <button type="button" class="mobile-nav-btn" data-mobile-view="today"><span>今日</span></button>
     <button type="button" class="mobile-nav-btn" data-mobile-view="exam"><span>赛卷</span></button>
-    <button type="button" class="mobile-nav-btn" data-mobile-view="learning"><span>学习</span></button>
+    <button type="button" class="mobile-nav-btn" data-mobile-view="library"><span>题库</span></button>
     <button type="button" class="mobile-nav-btn" data-mobile-view="review"><span>复测</span></button>
     <button type="button" class="mobile-nav-btn" data-mobile-more="true"><span>更多</span></button>
   </nav>
@@ -438,5 +449,7 @@
   <script src="app.js"></script>
   <script src="mobile_backup.js"></script>
   <script src="mobile_install.js"></script>
+  <script src="content_bank.js"></script>
+  <script src="content_ui.js"></script>
 </body>
 </html>
